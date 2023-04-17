@@ -1,0 +1,19 @@
+@page { 
+	size: auto;  
+	margin: 0mm; 
+}
+
+hr { 
+  margin: 0.5em;
+  opacity:1;
+  width: 100%;
+} 
+
+table {
+  border-collapse: separate;
+  border-spacing: 1px 0;
+}
+
+td {
+  padding: 2px 0;
+}
