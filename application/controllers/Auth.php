@@ -12,42 +12,46 @@ class Auth extends CI_Controller {
 	public function login()
 	{	
 		if ($this->session->userdata('status') !== 'login' ) {
-			if($this->input->post('captcha')){
+			if ($this->input->post('username')) {
+				$username = $this->input->post('username');
+				if ($this->auth_model->getUser($username)->num_rows() > 0) {
+					$data = $this->auth_model->getUser($username)->row();
+					$toko = $this->auth_model->getToko();
+					if (password_verify($this->input->post('password'), $data->password)) {
+						$akses = $this->auth_model->getAkses($data->role);
+						$userdata = array(
+							'id' => $data->id,
+							'username' => $data->username,
+							'password' => $data->password,
+							'nama' => $data->nama,
+							'role' => $akses->seo,
+							'status' => 'login',
+							'toko' => $toko
+						);
+						$this->session->set_userdata($userdata);
+						echo json_encode('sukses');
+					} else {
+						echo json_encode('passwordsalah');
+					}
+				} else {
+					echo json_encode('tidakada');
+				}
+			}else{
+				$this->load->view('login');
+			}
+
+			// ! ERROR SERVER SESSION
+			// * Sementara di bypass
+			
+			/* if($this->input->post('captcha')){
 				$captcha = $this->input->post('captcha');
 				if($captcha == $this->session->userdata('captcha')){
-					if ($this->input->post('username')) {
-						$username = $this->input->post('username');
-						if ($this->auth_model->getUser($username)->num_rows() > 0) {
-							$data = $this->auth_model->getUser($username)->row();
-							$toko = $this->auth_model->getToko();
-							if (password_verify($this->input->post('password'), $data->password)) {
-								$akses = $this->auth_model->getAkses($data->role);
-								$userdata = array(
-									'id' => $data->id,
-									'username' => $data->username,
-									'password' => $data->password,
-									'nama' => $data->nama,
-									'role' => $akses->seo,
-									'status' => 'login',
-									'toko' => $toko
-								);
-								$this->session->set_userdata($userdata);
-								echo json_encode('sukses');
-							} else {
-								echo json_encode('passwordsalah');
-							}
-						} else {
-							echo json_encode('tidakada');
-						}
-					}else{
-						$this->load->view('login');
-					}
 				}else{
 					echo json_encode('captchano');
 				}
 			} else {
 				$this->load->view('login');
-			}
+			} */
 		} else {
 			redirect('/');
 		}

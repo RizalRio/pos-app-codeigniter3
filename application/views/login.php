@@ -44,7 +44,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="input-group p-2 mb-3" style="border-radius: 8px; background-color: #d96e00 !important;">
+					<!-- <div class="input-group p-2 mb-3" style="border-radius: 8px; background-color: #d96e00 !important;">
 						<div class="text-center container-fluid mb-2">
 							<?= generate_captcha() ?>
 						</div>
@@ -55,7 +55,7 @@
 							<?php endfor; ?>
 							<button type="button" class="backspaceChar btn btn-sm text-white mx-2" style="background-color: #0168b1;">Backspace</button>
 						</div>
-					</div>
+					</div> -->
 					<div class="form-group">
 						<button class="btn btn-block btn-primary">Login</button>
 					</div>
